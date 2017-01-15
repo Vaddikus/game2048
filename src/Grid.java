@@ -11,6 +11,8 @@ public class Grid {
 
     int[][]grid;
 
+    public static int score =0;
+
     public Grid(int[][] list) {
         grid = list;
     }
@@ -23,6 +25,7 @@ public class Grid {
     public void showGrid()
     {
         String dot = ".";
+        System.out.println("Score: " + score);
         for(int[] x: grid) {
             for (int y: x) {
                 if (y == 0)
@@ -38,6 +41,8 @@ public class Grid {
 
     public int[][] createNumber()
     {
+
+
         Random random = new Random();
         int rand_i = random.nextInt(grid.length);
         int rand_j = random.nextInt(grid.length);
@@ -48,6 +53,8 @@ public class Grid {
 
         return grid;
     }
+
+
 
 
     public void moveUp() {
@@ -84,7 +91,7 @@ public class Grid {
             for (int j = 0; j < grid.length; j++) {
                 list[j] = grid[j][i];
             }
-            int[] t = processBEGINING(list);
+            int[] t = processEND(list);
             if (!Arrays.equals(t,list))
                 allow = true;
             for  (int z = 0; z < grid.length; z++) {
@@ -139,6 +146,7 @@ public class Grid {
             if (temp[index - 1] == temp[index]) {
                 temp[index-1] *= 2;
                 temp[index] = 0;
+                score += temp[index-1];
                }
         }
         for (int z = 1; z < temp.length; z++) {
