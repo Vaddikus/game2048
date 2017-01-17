@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by vadym on 04.01.17.
@@ -38,13 +37,23 @@ public class Grid {
     public int[][] createNumber() {
 
 
-        Random random = new Random();
-        int rand_i = random.nextInt(grid.length);
-        int rand_j = random.nextInt(grid.length);
-        if (grid[rand_i][rand_j] == 0)
-            grid[rand_i][rand_j] = 2;
-        else
-            createNumber();
+        List<Integer> cells = new ArrayList<>();
+        int t = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                cells.add(t++);
+            }
+        }
+
+            Collections.shuffle(cells);
+            for (Integer cell : cells) {
+                int x = cell / grid.length;
+                int y = cell % grid.length;
+                if (grid[x][y] == 0) {
+                    grid[x][y] = 2;
+                    break;
+                }
+            }
 
         return grid;
     }
