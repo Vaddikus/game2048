@@ -9,11 +9,20 @@ public class Grid {
 
     public int score = 0;
 
+    List<Integer> cells = new ArrayList<>();
+    int t = 0;
+
     public Grid(int[][] list) {
         grid = list;
     }
 
     public void start() {
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                cells.add(t++);
+            }
+        }
         createNumber();
         createNumber();
     }
@@ -36,26 +45,66 @@ public class Grid {
 
     public int[][] createNumber() {
 
-
-        List<Integer> cells = new ArrayList<>();
-        int t = 0;
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                cells.add(t++);
+        Collections.shuffle(cells);
+        for (Integer cell : cells) {
+            int x = cell / grid.length;
+            int y = cell % grid.length;
+            if (grid[x][y] == 0) {
+                grid[x][y] = 2;
+                break;
             }
         }
 
-            Collections.shuffle(cells);
-            for (Integer cell : cells) {
-                int x = cell / grid.length;
-                int y = cell % grid.length;
-                if (grid[x][y] == 0) {
-                    grid[x][y] = 2;
-                    break;
-                }
-            }
-
         return grid;
+    }
+
+
+    public boolean isContinue() {
+        int[][] copy = new int[grid.length][grid.length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                copy[i][j] = grid[i][j];
+            }
+        }
+
+        Grid tempGrid = new Grid(copy);
+        int counter = 0;
+        tempGrid.moveDown();
+        for (int i = 0; i < grid.length; i++) {
+            if (Arrays.equals(grid[i], tempGrid.grid[i])) {
+                counter++;
+            }
+        }
+        tempGrid = new Grid(copy);
+        tempGrid.moveUp();
+        for (int i = 0; i < grid.length; i++) {
+            if (Arrays.equals(grid[i], tempGrid.grid[i])) {
+                counter++;
+            }
+        }
+        tempGrid = new Grid(copy);
+        tempGrid.moveLeft();
+        for (int i = 0; i < grid.length; i++) {
+            if (Arrays.equals(grid[i], tempGrid.grid[i])) {
+                counter++;
+            }
+        }
+        tempGrid = new Grid(copy);
+        tempGrid.moveRight();
+        for (int i = 0; i < grid.length; i++) {
+            if (Arrays.equals(grid[i], tempGrid.grid[i])) {
+                counter++;
+            }
+        }
+
+
+        if (counter == grid.length * 4) {
+            System.out.println("Game is over");
+            return false;
+        }
+
+        return true;
+
     }
 
 

@@ -20,9 +20,7 @@ public class Main {
         g.showGrid();
 
 
-
-
-        for (int i = 0; i < 20; i++) {
+        while (g.isContinue()) {
             System.out.println("Please select direction(w/s/a/d): ");
             String s = scanner.next();
             switch (s) {
@@ -48,10 +46,10 @@ public class Main {
 
             }
 
-            }
-
-
         }
 
+
     }
+
+}
 
